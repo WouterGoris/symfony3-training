@@ -120,7 +120,7 @@ class BlogPostController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->blogpostService()->remove($blogpost);
+            $this->blogpostService->remove($blogpost);
             //$em = $this->getDoctrine()->getManager();
             //$em->remove($blogpost);
             //$em->flush();
