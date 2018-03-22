@@ -65,19 +65,7 @@ class BlogPostController extends Controller
      */
     public function showAction(Blogpost $blogpost)
     {
-        //$commentForm->handleRequest($request);
-        //
-        //if ($commentForm->isSubmitted() && $commentForm->isValid()){
-        //   $comment = $commentForm->getData();
-        //    
-        //    $entityManager = $this->getDoctrine()->getManager();
-        //    $entityManager->persists($comment);
-        //    $entityManager->flush();
-        //    
-        //    return $this->redirectToRoute('blogpost_show', ['id' => $blogpost->getId(id)]);
-        //    
-        //}
-
+        
         $deleteForm = $this->createDeleteForm($blogpost);
 
         return $this->render('blogpost/show.html.twig', array(

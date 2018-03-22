@@ -12,12 +12,7 @@
     <body>
     {% block nav%}
 
-    <p><a href= {{path('index')}}>HOME</a></p>
-    <p><a href= {{path('publisher')}}>Publishers</a></p>
-    <p><a href= {{path('platform')}}>Platforms</a></p>
-    <p><a href= {{path('gametype_page', {'gametype':'battleroyal'})}}>BattleRoyal</a></p>
-    <p><a href= {{path('gametype_page', {'gametype':'shooter'})}}>Shooter's's</a></p>
-    <p><a href= {{path('gametype_page', {'gametype':'moba'})}}>Moba's</a></p>
+    {{include('navigation.html.twig')}}
 
     {% endblock %}   
      

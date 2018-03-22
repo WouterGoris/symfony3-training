@@ -68,5 +68,13 @@ class BlogController extends Controller
         ));
     }
 
+    public function recentpostsAction()
+    {
+        $repository = $this->getDoctrine()->getRepository('AppBundle:Blogpost');
+        $blogposts = $repository->findBy([], [], 5, 0);
+        
+        return $this->render('blogposts/recentposts.html.twig', ['blogposts' => $blogposts]);
+    }
+
 
 }
