@@ -13,6 +13,20 @@ use Symfony\Component\Validator\Constraints as assert;
  */
 class Comment
 {
+
+    public function __construct()
+    {
+        $this->publicationDate = new \DateTime('now');
+    }
+
+    /**
+     * @var \DateTime
+     * 
+     * @ORM\Column(name="publication_date", type="datetime")
+     */
+    private $publicationDate;
+
+
     /**
      * @var Blogpost
      * @ORM\ManyToOne(targetEntity="Blogpost", inversedBy="comments")
@@ -28,6 +42,8 @@ class Comment
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+
 
     /**
      * @var string
@@ -113,5 +129,16 @@ class Comment
     {
         $this->blogpost = $blogpost;
     }
+
+    public function getPublicationDate()
+    {
+        return $this->publicationDate;
+    }
+
+    public function setPublicationDate($publicationDate)
+    {
+        $this->publicationDate = $publicationDate;
+    }
 }
+
 

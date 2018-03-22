@@ -13,6 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 class Blogpost
 {
 
+    public function __construct()
+    {
+        $this->publicationDate = new \DateTime('now');
+    }
+
+    /**
+     * @var string
+     * @ORM\Column(name="author", type="string", length=255)
+     */
+
+    private $author;
+
     /**  
      * @var Comment[] 
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="blogpost")
@@ -50,6 +62,30 @@ class Blogpost
      */
     private $publicationDate;
 
+
+    /**
+     * Set author
+     *
+     * @param string $author
+     *
+     * @return Blogpost
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return string
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
 
     /**
      * Get id
@@ -143,5 +179,7 @@ class Blogpost
     {
         return $this->comments;
     }
+
+    
 }
 

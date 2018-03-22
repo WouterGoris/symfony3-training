@@ -44,6 +44,11 @@
                     {{ comment.name }}
                 </td> 
             </tr>
+            <tr>
+                <td>
+                    {{ comment.publicationDate|date('Y-m-d H:i:s') }}
+                </td> 
+            </tr>
             {% endfor %}
     </table>
 {% endblock %}

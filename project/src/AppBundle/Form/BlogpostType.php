@@ -13,7 +13,7 @@ class BlogpostType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title')->add('body')->add('publicationDate');
+        $builder->add('title')->add('body')->add('publicationDate')->add('author');
     }/**
      * {@inheritdoc}
      */
