@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Service\BlogpostService;
+use AppBundle\Service\CommentService;
 
 /**
  * Blog controller.
@@ -17,6 +19,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BlogController extends Controller
 {
+
+    private $commentService;
+    private $blogpostService;
+    
+    public function __construct(CommentService $commentService, BlogpostService $blogpostService)
+    {
+        $this->commentService = $commentService;
+        $this->blogpostService = $blogpostService;
+    }
+
+
 /**
      * Finds and displays a blog entity.
      *
@@ -27,9 +40,9 @@ class BlogController extends Controller
     public function indexAction()
     {
 
-        $em = $this->getDoctrine()->getManager();
+        //$em = $this->getDoctrine()->getManager();
 
-        $blogposts = $em->getRepository('AppBundle:Blogpost')->findAll();
+        $blogposts = $this->blogpostService->fetchAllPosts();
 
         return $this->render('blog/index.html.twig', array(
             'blogposts' => $blogposts,
@@ -52,11 +65,13 @@ class BlogController extends Controller
 
         if ($commentForm->isSubmitted() && $commentForm->isValid()){
             $comment = $commentForm->getData();
+            
+            $this->commentService->persist($comment);
 
-            $this->getDoctrine()->getManager()->persist($comment);
-            $this->getDoctrine()->getManager()->flush();
+            //$this->getDoctrine()->getManager()->persist($comment);
+            //$this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('blogpost_show', ['id' => $blogpost->getId()]);
+            return $this->redirectToRoute('blog_show', ['id' => $blogpost->getId()]);
         }
 
             $comments = $blogpost->getComments();
@@ -70,8 +85,9 @@ class BlogController extends Controller
 
     public function recentpostsAction()
     {
-        $repository = $this->getDoctrine()->getRepository('AppBundle:Blogpost');
-        $blogposts = $repository->findBy([], [], 5, 0);
+        //$repository = $this->blogpostService->getRepository('AppBundle:Blogpost');
+        //$repository = $this->getDoctrine()->getRepository('AppBundle:Blogpost');
+        $blogposts = $this->blogpostService->fetchRecentPosts();
         
         return $this->render('blog/recentposts.html.twig', ['blogposts' => $blogposts]);
     }

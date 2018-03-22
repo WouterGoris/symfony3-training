@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Blogpost;
+use AppBundle\Service\BlogpostService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +15,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
  */
 class BlogPostController extends Controller
 {
+
+    private $blogpostService;
+    
+    public function __construct(BlogpostService $blogpostService)
+    {
+        $this->blogpostService = $blogpostService;
+    }
     /**
      * Lists all blogpost entities.
      *
@@ -22,9 +30,9 @@ class BlogPostController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        //$em = $this->getDoctrine()->getManager();
 
-        $blogposts = $em->getRepository('AppBundle:Blogpost')->findAll();
+        $blogposts = $this->blogpostService->fetchAllPosts();
 
         return $this->render('blogpost/index.html.twig', array(
             'blogposts' => $blogposts,
@@ -44,9 +52,8 @@ class BlogPostController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($blogpost);
-            $em->flush();
+
+            $this->blogpostService->persist($blogpost);
 
             return $this->redirectToRoute('blogpost_show', array('id' => $blogpost->getId()));
         }
@@ -87,9 +94,10 @@ class BlogPostController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            //$this->getDoctrine()->getManager()->flush();
+            $this->blogpostService->persist($blogpost);
 
-            return $this->redirectToRoute('blogpost_edit', array('id' => $blogpost->getId()));
+            return $this->redirectToRoute('blogpost_index');
         }
 
         return $this->render('blogpost/edit.html.twig', array(
@@ -111,9 +119,11 @@ class BlogPostController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($blogpost);
-            $em->flush();
+
+            $this->blogpostService()->remove($blogpost);
+            //$em = $this->getDoctrine()->getManager();
+            //$em->remove($blogpost);
+            //$em->flush();
         }
 
         return $this->redirectToRoute('blogpost_index');
