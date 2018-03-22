@@ -73,7 +73,7 @@ class BlogController extends Controller
         $repository = $this->getDoctrine()->getRepository('AppBundle:Blogpost');
         $blogposts = $repository->findBy([], [], 5, 0);
         
-        return $this->render('blogposts/recentposts.html.twig', ['blogposts' => $blogposts]);
+        return $this->render('blog/recentposts.html.twig', ['blogposts' => $blogposts]);
     }
 
 

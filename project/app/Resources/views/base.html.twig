@@ -16,7 +16,10 @@
 
     {% endblock %}   
      
-        {% block body %}{% endblock %}
+        {% block body %}
+
+        {% endblock %}
+        {{render(controller('AppBundle:Blog:recentposts'))}}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

@@ -1,0 +1,9 @@
+<div>
+    <ul>
+        {% for blogpost in blogposts %}
+        <li>
+            <a href="{{path('blog_show', {'id':blogpost.id})}}">{{blogpost.title}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
