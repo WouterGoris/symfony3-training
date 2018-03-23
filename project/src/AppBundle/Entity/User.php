@@ -8,8 +8,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * User
  * 
- * @ORM\Table(name"user")
- * @ORM\Entity(repositryClass="AppBundle\Repository\UserRepository")
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
 
 class User implements UserInterface, \Serializable
@@ -125,4 +125,20 @@ class User implements UserInterface, \Serializable
                 $this->password,
             ) = unserialize($serialized);
         }
+
+        public function getRoles()
+        {
+            return ['ROLE_ADMIN'];
+        }
+
+        public function getSalt()
+        {
+            return null;
+        }
+
+        public function eraseCredentials()
+        {
+
+        } 
+
 }

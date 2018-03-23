@@ -1,5 +1,15 @@
 {% block navigation %}
-    <a href="{{path('blogpost_index')}}">BlogPost</a>
+    
     <a href="{{path('blog_index')}}">Blog</a>
     <a href= {{path('index')}}>Home</a>
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY')%}
+        <a href= {{path('logout')}}>logout</a>
+    {% else %}
+         <a href= {{path('login')}}>login</a>    
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{path('blogpost_index')}}">Admin</a>
+    {% endif %}
+
 {% endblock %}
