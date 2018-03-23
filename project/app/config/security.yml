@@ -20,6 +20,7 @@ security:
             security: false
 
         main:
+            providor: db_providor
             anonymous: ~
             # activate different ways to authenticate
 
